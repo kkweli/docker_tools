@@ -1,0 +1,16 @@
+Sure, here's the content for the file `/docker-compose-trivy-registry/docker-compose-trivy-registry/config/trivy.yaml`:
+
+# config/trivy.yaml
+trivy:
+  cache:
+    dir: "/root/.cache/trivy"
+  severity: "HIGH,CRITICAL"
+  ignore-unfixed: true
+  vuln-type: "os,library"
+  timeout: 5m
+  output: "json"
+  quiet: false
+  skip-update: false
+  auto-refresh: true
+  image:
+    default: "docker.io/library/alpine:latest"

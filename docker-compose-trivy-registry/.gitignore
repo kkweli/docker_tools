@@ -1,0 +1,44 @@
+# Docker volumes and data
+registry-data/
+trivy-cache/
+reports/
+**/data/
+
+# Environment files
+.env
+.env.*
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Cache directories
+.cache/
+__pycache__/
+
+# Local Registry Storage
+C:\projects\local_registry\*
+/projects/local_registry/*
+
+# Trivy Reports and Cache
+*.json
+*.txt
+!config/*.json
+
+# Test files
+test/
+coverage/
+
+# Temporary files
+*.tmp
+temp/

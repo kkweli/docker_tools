@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  registry:
+    image: registry:2
+    container_name: local-registry
+    ports:
+      - "5000:5000"
+    volumes:
+      - C:\projects\local_registry\registry:/var/lib/registry
+      - ./config/registry-config.yml:/etc/docker/registry/config.yml:ro
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+    restart: unless-stopped
+    networks:
+      - scanner-net
+
+  trivy:
+    image: aquasec/trivy:latest
+    container_name: trivy-scanner
+    volumes:
+      - C:\projects\local_registry\trivy-cache:/root/.cache
+      - C:\projects\local_registry\reports:/reports
+      - ./config/trivy.yaml:/etc/trivy/config.yaml:ro
+    environment:
+      TRIVY_LISTEN: 0.0.0.0:8080
+      TRIVY_CACHE_DIR: /root/.cache/trivy
+      TRIVY_REPORT_DIR: /reports
+    ports:
+      - "8080:8080"
+    command: server --listen 0.0.0.0:8080
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - scanner-net
+
+  redis:
+    image: redis:alpine
+    container_name: trivy-redis
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - scanner-net
+
+volumes:
+  redis-data:
+
+networks:
+  scanner-net:
+    driver: bridge
