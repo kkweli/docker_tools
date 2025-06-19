@@ -60,12 +60,6 @@ Performance optimization layer offering:
    - Trivy: http://localhost:8080
    - Redis: localhost:6379
 
-## Learn More
-
-- [Detailed Documentation](./docs/README.md)
-- [Configuration Guide](./docs/configuration.md)
-- [API Reference](./docs/api.md)
-
 ## License
 
-MIT License - Use freely for development and production
+Open Source License - Use freely for development and production
